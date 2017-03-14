@@ -129,11 +129,6 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
         public Cursor loadInBackground() {
 
             Cursor cursor = db.getUserNote(CalendarActivity.userLogin,CalendarActivity.userDate);
-            /*try {
-                TimeUnit.SECONDS.sleep(3);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
             return cursor;
         }
 
