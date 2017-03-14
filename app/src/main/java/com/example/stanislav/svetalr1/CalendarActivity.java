@@ -13,34 +13,31 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.Space;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class CalendarActivity extends AppCompatActivity implements View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor>{
-    boolean loginData;
     TextView dateSelect;
-    CalendarView calendarVar;
     ListView lvDate;
     DB db;
     SimpleCursorAdapter scAdapter;
     public static String userDate="";
     public static String userLogin="";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
+
         dateSelect = (TextView) findViewById(R.id.textView4);
+
         Intent intent = getIntent();
         dateSelect.setText(intent.getStringExtra("date"));
         userDate=intent.getStringExtra("date");
         userLogin=intent.getStringExtra("login");
+
         Button butadd = (Button)findViewById(R.id.addbtn);
         butadd.setOnClickListener(this);
         registerForContextMenu(butadd);
@@ -55,7 +52,6 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
         lvDate=(ListView)findViewById(R.id.lvData);
         lvDate.setAdapter(scAdapter);
         registerForContextMenu(lvDate);
-
         getSupportLoaderManager().initLoader(0,null,this);
 
     }
@@ -68,27 +64,13 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
                 intent.putExtra("user",userLogin);
                 intent.putExtra("date",userDate);
                 startActivityForResult(intent,1);
-                //Toast.makeText(this,"+",Toast.LENGTH_SHORT).show();
                 break;
         };
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-       /* Cursor cursor=db.getUserNote(userLogin,userDate);
-        if(cursor.moveToFirst()){
-            int logdata = cursor.getColumnIndex( "time" );
-            Toast.makeText(this,cursor.getString(logdata),Toast.LENGTH_SHORT).show();
-            cursor.close();
-        }*/
-        //getSupportLoaderManager().getLoader(0).forceLoad();
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data == null) {return;}
+        if (data == null) {return;};
         getSupportLoaderManager().getLoader(0).forceLoad();
     }
 

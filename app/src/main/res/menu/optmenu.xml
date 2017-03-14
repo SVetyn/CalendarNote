@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:title="Add Note"
         android:id="@+id/menuaddnote" />
     <item android:title="Show Notes"
         android:id="@+id/menushownote" />
+    <item android:title="Set background"
+        android:id="@+id/menubgcolor" />
     <item android:title="LogOff"
         android:id="@+id/logoffmenu" />
     <item android:title="Exit"

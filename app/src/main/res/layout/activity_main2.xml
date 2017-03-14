@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="com.example.stanislav.svetalr1.Main2Activity">
+    
+    <include layout="@layout/content_calendar" />
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
