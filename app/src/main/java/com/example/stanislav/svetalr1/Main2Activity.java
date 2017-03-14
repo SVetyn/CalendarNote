@@ -2,6 +2,8 @@ package com.example.stanislav.svetalr1;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,6 +23,12 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     boolean loginData=false;
     CalendarView calendarVar;
     final int LOGIN_ACTIVITY_DATA=1;
+
+    final int MAX_STREAMS=1;
+    SoundPool sp;
+    int soundIdClick;
+    int streamIdClick;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +41,10 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         startActivity(intent);
         Animation anim=null;
         anim= AnimationUtils.loadAnimation(this,R.anim.text_view_anim);
-        //txtLogo.startAnimation(anim);
         fab.startAnimation(anim);
+
+        sp = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC,0);
+        soundIdClick = sp.load(this,R.raw.buttonsoundeffect,1);
     }
 
     @Override
@@ -55,16 +65,13 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+        streamIdClick = sp.play(soundIdClick,1,1,1,0,1);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String currentDate=sdf.format(new Date(calendarVar.getDate()));
         Intent intent = new Intent(this, CalendarActivity.class);
         intent.putExtra("date", currentDate);
         SharedPreferences spref = getSharedPreferences("LoginData",MODE_PRIVATE);
         intent.putExtra("login", spref.getString("user",""));
-        /*intent.putExtra("month", true);
-        intent.putExtra("years", true);
-        intent.putExtra("month", true);*/
-        //Toast.makeText(this,spref.getString("user",""),Toast.LENGTH_SHORT).show();
         startActivity(intent);
     }
 
@@ -88,25 +95,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             case R.id.menuexit:
                 android.app.DialogFragment newFragment = new ClassForDialogWindows();
                 newFragment.show(getFragmentManager(),"Info");
-                /*AlertDialog.Builder builder = new  AlertDialog.Builder(this);
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-                builder.setMessage("Exit?").setTitle("Info").setIcon(android.R.drawable.ic_dialog_alert);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-               */ break;
+                break;
             case R.id.logoffmenu:
                 SharedPreferences spref = getSharedPreferences("LoginData", MODE_PRIVATE);
                 SharedPreferences.Editor ed=spref.edit();
@@ -115,6 +104,12 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                 onResume();
                 break;
         }
-        return super.onOptionsItemSelected(item); // aqkkh jarxd
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sp.release();
     }
 }
