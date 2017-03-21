@@ -85,6 +85,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         };
 
         getBackgroundBitmap(savedText,this);
+        startService(new Intent(this,NotesServiceMessage.class));
     }
 
     private void getBackgroundBitmap(final String uri, final Main2Activity parent){
@@ -184,6 +185,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                 SharedPreferences spref = getSharedPreferences("LoginData", MODE_PRIVATE);
                 SharedPreferences.Editor ed=spref.edit();
                 ed.putBoolean("login", false);
+                ed.putString("lastsession", "");
                 ed.commit();
                 onResume();
                 break;
@@ -200,6 +202,13 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     protected void onDestroy() {
         super.onDestroy();
         sp.release();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        String currentDate=sdf.format(new Date());
+        SharedPreferences spref = getSharedPreferences("LoginData", MODE_PRIVATE);
+        SharedPreferences.Editor ed=spref.edit();
+        if(spref.getBoolean("Login",false))
+            ed.putString("lastsession", currentDate);
+        ed.commit();
     }
 
 

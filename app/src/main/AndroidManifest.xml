@@ -5,7 +5,7 @@
     <uses-feature android:name="android.hardware.camera" />
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_calendar"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -13,7 +13,7 @@
         <activity android:name=".CalendarActivity" />
         <activity
             android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"
+            android:label="Calendar Note"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +24,11 @@
         <activity android:name=".Registration" />
         <activity android:name=".AddNotes" />
         <activity android:name=".Logo"></activity>
+        <service
+            android:name=".NotesServiceMessage"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":messageprocess"></service>
     </application>
 
 </manifest>
